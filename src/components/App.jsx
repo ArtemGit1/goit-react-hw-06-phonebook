@@ -1,33 +1,25 @@
-import React, { useState } from 'react';
-import ContactForm from './ContactForm/ContactForm.js';
-import ContactList from './ContactList/ContactList.js';
-import Filter from './Filter/Filter.js';
+
+import React from 'react';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from 'components/Store/Store';
+import ContactForm from 'components/ContactForm/ContactForm';
+import ContactList from 'components/ContactList/ContactList';
+import Filter from 'components/Filter/Filter';
 
 const App = () => {
-  const [contacts, setContacts] = useState([]);
-  const [filter, setFilter] = useState('');
-
-  const addContact = (contact) => {
-    setContacts((prevContacts) => [...prevContacts, contact]);
-  };
-
-  const deleteContact = (id) => {
-    setContacts((prevContacts) => prevContacts.filter((contact) => contact.id !== id));
-  };
-
-  const filteredContacts = contacts.filter((contact) =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
-
   return (
-    <div>
-      <h1>Phonebook</h1>
-      <ContactForm addContact={addContact} contacts={contacts} />
-
-      <h2>Contacts</h2>
-      <Filter filter={filter} setFilter={setFilter} />
-      <ContactList contacts={filteredContacts} deleteContact={deleteContact} />
-    </div>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <div>
+          <h1>Phonebook</h1>
+          <ContactForm />
+          <h2>Contacts</h2>
+          <Filter />
+          <ContactList />
+        </div>
+      </PersistGate>
+    </Provider>
   );
 };
 

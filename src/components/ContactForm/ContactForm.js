@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
-import { nanoid } from 'nanoid';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'components/ContactsSlice/ContactsSlice';
+import { v4 as uuidv4 } from 'uuid';
 
-const ContactForm = ({ addContact, contacts }) => {
+const ContactForm = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector((state) => state.list);
+
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-
     const isDuplicate = contacts.some((contact) => contact.name.toLowerCase() === name.toLowerCase());
 
     if (isDuplicate) {
       alert('This contact already exists!');
     } else {
-      addContact({ id: nanoid(), name, number });
+      dispatch(addContact({ id: uuidv4(), name, number }));
       setName('');
       setNumber('');
     }
@@ -24,12 +28,14 @@ const ContactForm = ({ addContact, contacts }) => {
     <form onSubmit={handleSubmit}>
       <label>
         Name:
-        <input type="text" name="name" value={name} onChange={(e) => setName(e.target.value)} required />
+        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
       </label>
+
       <label>
         Number:
-        <input type="tel" name="number" value={number} onChange={(e) => setNumber(e.target.value)} required />
+        <input type="text" value={number} onChange={(e) => setNumber(e.target.value)} />
       </label>
+
       <button type="submit">Add Contact</button>
     </form>
   );
