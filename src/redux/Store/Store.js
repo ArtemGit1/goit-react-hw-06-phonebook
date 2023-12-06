@@ -9,7 +9,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['contacts'],
+
 };
 
 const rootReducer = combineReducers({
