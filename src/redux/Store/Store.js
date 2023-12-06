@@ -2,14 +2,15 @@ import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import contactsReducer from '../ContactsSlice/ContactsSlice';
 import storage from 'redux-persist/lib/storage';
-
 import { persistReducer, persistStore } from 'redux-persist';
 
 const persistConfig = {
   key: 'root',
   storage,
   blacklist: ['contacts'],
+  serialize: true,
 };
+
 
 const rootReducer = combineReducers({
   contacts: contactsReducer,

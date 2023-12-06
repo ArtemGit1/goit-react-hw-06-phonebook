@@ -4,9 +4,9 @@ import { addContact } from '../../redux/ContactsSlice/ContactsSlice';
 import { v4 as uuidv4 } from 'uuid';
 
 const ContactForm = () => {
+  
   const dispatch = useDispatch();
   const contacts = useSelector((state) => state.contacts.list);
-
 
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
